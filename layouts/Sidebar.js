@@ -6,7 +6,6 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
-
   useMediaQuery,
 } from "@mui/material";
 import Logo from "components/Logo";
@@ -14,7 +13,7 @@ import FeatherIcon from "feather-icons-react";
 
 import { useRouter } from "next/router";
 import PropTypes from "prop-types";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Menuitems from "./MenuItems";
 
 const Sidebar = ({
@@ -44,54 +43,60 @@ const Sidebar = ({
       curl.push(url);
     }
   };
-
+  const [role, setRole] = useState("");
+  useEffect(() => {
+    const role = JSON.parse(localStorage.getItem("role"));
+    setRole(role);
+  }, []);
   const SidebarContent = (
     <Box p={2} height="100%">
       <Logo />
       <Box mt={2}>
         <List>
-          {Menuitems.map((item, index) => (
-            <List component="li" disablePadding key={item.title}>
-              <Button
-                // href={updatedButton ? item.href : ""}
-                onClick={() => handleRoute(item.href)}
-                sx={{
-                  display: "block",
-                  width: "100%",
-                }}
-              >
-                <ListItem
-                  onClick={() => handleClick(index, item.value)}
-                  button
-                  selected={location === item.href}
+          {Menuitems.filter((item) => item.value === role).map(
+            (item, index) => (
+              <List component="li" disablePadding key={item.title}>
+                <Button
+                  // href={updatedButton ? item.href : ""}
+                  onClick={() => handleRoute(item.href)}
                   sx={{
-                    mb: 1,
-                    ...(location === item.href && {
-                      color: "white",
-                      width: "100%",
-                      backgroundColor: (theme) =>
-                        `${theme.palette.primary.main}!important`,
-                    }),
+                    display: "block",
+                    width: "100%",
                   }}
                 >
-                  <ListItemIcon>
-                    <FeatherIcon
-                      style={{
-                        color: `${location === item.href ? "white" : ""} `,
-                      }}
-                      icon={item.icon}
-                      width="20"
-                      height="20"
-                    />
-                  </ListItemIcon>
+                  <ListItem
+                    onClick={() => handleClick(index, item.value)}
+                    button
+                    selected={location === item.href}
+                    sx={{
+                      mb: 1,
+                      ...(location === item.href && {
+                        color: "white",
+                        width: "100%",
+                        backgroundColor: (theme) =>
+                          `${theme.palette.primary.main}!important`,
+                      }),
+                    }}
+                  >
+                    <ListItemIcon>
+                      <FeatherIcon
+                        style={{
+                          color: `${location === item.href ? "white" : ""} `,
+                        }}
+                        icon={item.icon}
+                        width="20"
+                        height="20"
+                      />
+                    </ListItemIcon>
 
-                  <ListItemText onClick={onSidebarClose}>
-                    {item.title}
-                  </ListItemText>
-                </ListItem>
-              </Button>
-            </List>
-          ))}
+                    <ListItemText onClick={onSidebarClose}>
+                      {item.title}
+                    </ListItemText>
+                  </ListItem>
+                </Button>
+              </List>
+            )
+          )}
         </List>
       </Box>
     </Box>

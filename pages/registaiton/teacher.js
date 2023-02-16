@@ -16,7 +16,8 @@ const TeacherRegistation = () => {
   });
   const router = useRouter();
   console.log(teacher);
-  const { userDispatch } = useAppContext();
+  const { userDispatch, user } = useAppContext();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -26,7 +27,7 @@ const TeacherRegistation = () => {
         {
           name: teacher.name,
           email: teacher.email,
-          password: teacher.password + "teacher",
+          password: teacher.password + user,
           phone: teacher.phone,
           subject: teacher.subject,
         },
@@ -36,7 +37,7 @@ const TeacherRegistation = () => {
       );
       console.log(res);
       if (res.status === 200) {
-        router.push("/");
+        router.push("/auth/signIn/?user=teacher");
         setTeacher({
           ...teacher,
           email: "",

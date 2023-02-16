@@ -18,7 +18,7 @@ export default function MyApp(props) {
     <SessionProvider session={pageProps.session}>
       <CacheProvider value={emotionCache}>
         <Head>
-          <title>Gethugothemes Admin</title>
+          <title>Online Learning Platform</title>
           <meta name="viewport" content="initial-scale=1, width=device-width" />
         </Head>
         <AppWrapper>

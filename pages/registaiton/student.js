@@ -38,7 +38,7 @@ const StudentRegistation = () => {
       );
       console.log(res);
       if (res.status === 200) {
-        router.push("/");
+        router.push("/auth/signIn/?user=student");
         setStudent({
           ...student,
           email: "",

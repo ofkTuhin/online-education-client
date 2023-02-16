@@ -22,20 +22,23 @@ const LoginForm = ({ authProviders }) => {
   useEffect(() => {
     setUser(router.query?.user);
   }, [router]);
-  console.log(router);
+  useEffect(() => {
+    localStorage.setItem("role", JSON.stringify(user));
+  }, [user]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const res = await signIn("credentials", {
       email: userInfo.email,
-      password: userInfo.password,
+      password: userInfo.password + user,
       user: user,
       redirect: false,
     });
     console.log(res);
     // console.log(res);
     if (res.status === 200) {
-      router.replace("/");
+      router.replace(`/${user}`);
       setUserInfo({ ...userInfo, email: "", password: "" });
     } else {
       setError("Try again incorrect email or password");

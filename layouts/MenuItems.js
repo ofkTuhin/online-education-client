@@ -1,21 +1,16 @@
 const Menuitems = [
   {
-    title: "Dashbord",
-    icon: "layout",
-    href: "/",
+    title: "Teacher",
+    icon: "disc",
+    href: "/teacher",
+    value: "teacher",
   },
-  // {
-  //   title: "Testimonial",
-  //   icon: "disc",
-  //   href: "/testimonial",
-  //   value: "testimonial",
-  // },
-  // {
-  //   title: "Showcase",
-  //   icon: "disc",
-  //   href: "/showcase",
-  //   value: "showcase",
-  // },
+  {
+    title: "Student",
+    icon: "disc",
+    href: "/student",
+    value: "student",
+  },
   // {
   //   title: "Reviews",
   //   icon: "disc",

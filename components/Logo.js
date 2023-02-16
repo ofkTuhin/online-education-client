@@ -12,7 +12,7 @@ const Logo = () => {
       loading="eager"
       priority
     /> */}
-      Next Auth Boilerplate
+      Online Learning Platform
     </Link>
   );
 };
