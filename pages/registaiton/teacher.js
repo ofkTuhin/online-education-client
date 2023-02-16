@@ -1,6 +1,13 @@
 import React from "react";
 import { Axios } from "@lib/axios";
-import { Button, Grid, MenuItem, Select, TextField } from "@mui/material";
+import {
+  Button,
+  Grid,
+  MenuItem,
+  Select,
+  TextField,
+  Typography,
+} from "@mui/material";
 import Label from "components/FormLabel";
 import { useState } from "react";
 import { useAppContext } from "store/store";
@@ -69,6 +76,9 @@ const TeacherRegistation = () => {
           paddingBottom: "32px",
         }}
       >
+        <Typography variant="h1" mt={10} mb={4}>
+          Teacher Registation{" "}
+        </Typography>
         <form onSubmit={handleSubmit}>
           <Grid item xs={6}>
             <Label htmlFor="name" required={true} label="name" />

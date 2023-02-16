@@ -1,6 +1,6 @@
 import { Axios } from "@lib/axios";
 
-import { Button, Grid, TextField } from "@mui/material";
+import { Button, Grid, TextField, Typography } from "@mui/material";
 import Label from "components/FormLabel";
 import { useRouter } from "next/router";
 import { useState } from "react";
@@ -9,12 +9,12 @@ import { useAppContext } from "store/store";
 const AdminRegistation = () => {
   const [admin, setAdmin] = useState({ email: "", password: "", name: "" });
   const router = useRouter();
-  const { userDispatch, user } = useAppContext();
+  const { userDispatch } = useAppContext();
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const res = await Axios.post(
-        "admin/",
+        "admin",
 
         {
           email: admin.email,
@@ -52,8 +52,11 @@ const AdminRegistation = () => {
           paddingBottom: "32px",
         }}
       >
+        <Typography variant="h1" mt={10} mb={4}>
+          Admin Registation{" "}
+        </Typography>
         <form onSubmit={handleSubmit}>
-          <Grid item xs={6}>
+          <Grid item>
             <Label htmlFor="name" required={true} label="name" />
             <TextField
               id="name"
@@ -68,7 +71,7 @@ const AdminRegistation = () => {
             />
           </Grid>
 
-          <Grid item xs={6}>
+          <Grid item>
             <Label htmlFor="email" required={true} label="Email" />
             <TextField
               id="email"
@@ -82,7 +85,7 @@ const AdminRegistation = () => {
               required
             />
           </Grid>
-          <Grid item xs={6}>
+          <Grid item>
             <Label htmlFor="password" required={true} label="Password" />
             <TextField
               id="password"
@@ -98,7 +101,7 @@ const AdminRegistation = () => {
             />
           </Grid>
 
-          <Button variant="contained" color="primary" fullWidth type="submit">
+          <Button variant="contained" fullWidth color="primary" type="submit">
             Submit
           </Button>
         </form>

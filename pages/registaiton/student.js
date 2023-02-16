@@ -1,6 +1,13 @@
 import React from "react";
 import { Axios } from "@lib/axios";
-import { Button, Grid, MenuItem, Select, TextField } from "@mui/material";
+import {
+  Button,
+  Grid,
+  MenuItem,
+  Select,
+  TextField,
+  Typography,
+} from "@mui/material";
 import Label from "components/FormLabel";
 import { useState } from "react";
 import { useAppContext } from "store/store";
@@ -71,8 +78,11 @@ const StudentRegistation = () => {
           paddingBottom: "32px",
         }}
       >
+        <Typography variant="h1" mt={10} mb={4}>
+          Student Registation{" "}
+        </Typography>
         <form onSubmit={handleSubmit}>
-          <Grid item xs={6}>
+          <Grid item>
             <Label htmlFor="name" required={true} label="name" />
             <TextField
               id="name"
@@ -87,7 +97,7 @@ const StudentRegistation = () => {
               type="text"
             />
           </Grid>
-          <Grid item xs={6}>
+          <Grid item>
             <Label htmlFor="email" required={true} label="Email" />
             <TextField
               id="email"
@@ -103,7 +113,7 @@ const StudentRegistation = () => {
               required
             />
           </Grid>
-          <Grid item xs={6}>
+          <Grid item>
             <Label htmlFor="password" required={true} label="Password" />
             <TextField
               id="password"
@@ -121,7 +131,7 @@ const StudentRegistation = () => {
             />
           </Grid>
 
-          <Grid item xs={6}>
+          <Grid item>
             <Label htmlFor="phone" required={true} label="phone" />
             <TextField
               id="phone"
@@ -138,7 +148,7 @@ const StudentRegistation = () => {
               type="text"
             />
           </Grid>
-          <Grid item xs={6}>
+          <Grid item>
             <Label htmlFor="class" required={true} label="Select class" />
             <Select
               sx={{
@@ -159,7 +169,7 @@ const StudentRegistation = () => {
               <MenuItem value="ten">Ten</MenuItem>
             </Select>
           </Grid>
-          <Grid item xs={6}>
+          <Grid item>
             <Label htmlFor="group" required={true} label="Select group" />
             <Select
               sx={{
