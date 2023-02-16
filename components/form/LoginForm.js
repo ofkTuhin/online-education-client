@@ -141,7 +141,7 @@ const LoginForm = ({ authProviders }) => {
 
           <Typography>
             Don't have an account?{" "}
-            <Link href={`/registaiton/${user}`}>Registation</Link>
+            <Link href={`/registation/${user}`}>Registation</Link>
           </Typography>
         </Grid>
       ) : (
