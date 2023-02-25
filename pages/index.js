@@ -20,6 +20,15 @@ export async function getServerSideProps(context) {
       },
     };
   }
+  console.log(session);
+  if (session) {
+    return {
+      redirect: {
+        destination: `/${session.user.user.role}`,
+        permanent: false,
+      },
+    };
+  }
 
   return {
     props: { session },

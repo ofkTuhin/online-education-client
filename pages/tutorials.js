@@ -1,18 +1,16 @@
 import FullLayout from "@layouts/FullLayout";
 import { getSession } from "next-auth/react";
-import { useRouter } from "next/router";
-import React, { useEffect } from "react";
-import { useAppContext } from "store/store";
+import React from "react";
 
-const Student = () => {
-  const { studentState } = useAppContext();
-
+const Tutoreals = () => {
   return (
     <FullLayout>
-      <div>Student</div>
+      <div>Tutoreals</div>
     </FullLayout>
   );
 };
+
+export default Tutoreals;
 export async function getServerSideProps(context) {
   const session = await getSession(context);
 
@@ -24,16 +22,8 @@ export async function getServerSideProps(context) {
       },
     };
   }
-  if (session.user.user.role !== "student") {
-    return {
-      redirect: {
-        destination: "/404",
-        permanent: false,
-      },
-    };
-  }
+
   return {
     props: { session },
   };
 }
-export default Student;

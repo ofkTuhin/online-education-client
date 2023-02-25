@@ -2,9 +2,14 @@ import { Axios } from "@lib/axios";
 import NextAuth from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
 
-const data = async (user) => {
+const data = async (user, email) => {
   return await Axios.get(
-    user === "admin" ? "admin" : user === "teacher" ? "teacher" : "student"
+    user === "admin" ? "admin" : user === "teacher" ? "teacher" : "student",
+    {
+      headers: {
+        user: email,
+      },
+    }
   );
 };
 export const authOptions = {
@@ -21,7 +26,7 @@ export const authOptions = {
         // Add logic here to look up the user from the credentials supplied
         const { email, password, user } = credentials;
 
-        const res = await data(user);
+        const res = await data(user, email);
 
         // const user = { id: 1, name: "J Smith", email: "jsmith@example.com" };
 
@@ -30,14 +35,13 @@ export const authOptions = {
           res.data.result.map((data) => data.password).includes(password)
         ) {
           return {
-            email: email,
-            user: user,
-
-            // role: res.data.result[0].role,
+            user: {
+              role: user,
+              email: email,
+            },
           };
-        } else {
-          return null;
         }
+        return null;
       },
     }),
   ],
@@ -45,8 +49,8 @@ export const authOptions = {
     signIn: "/auth/signIn",
   },
   callbacks: {
-    async jwt({ token }) {
-      return token;
+    async jwt({ token, user }) {
+      return { ...token, ...user };
     },
     session: async ({ session, token }) => {
       if (token) {
@@ -57,9 +61,10 @@ export const authOptions = {
         ...session,
         user: {
           ...session.user,
-          // role: test,
+          user: token.user,
         },
       };
+
       return sessionData;
     },
   },

@@ -8,46 +8,52 @@ import {
   Modal,
   Select,
   TextField,
+  Typography,
 } from "@mui/material";
 import Label from "components/FormLabel";
+import { useRouter } from "next/router";
 import { useState } from "react";
 import { useAppContext } from "store/store";
 
 const AdminForm = ({ open, setOpen, setIsSubmit }) => {
-  const [admin, setAdmin] = useState({ email: "", password: "", role: "" });
-  const { userDispatch } = useAppContext();
+  const [admin, setAdmin] = useState({ email: "", password: "", name: "" });
+  const router = useRouter();
+  const { userDispatch, existMessage, setExistMessage } = useAppContext();
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const res = await Axios.post(
-        "admin/",
+        "admin",
 
         {
           email: admin.email,
           password: admin.password,
-          role: admin.role,
+          name: admin.name,
         },
         {
           headers: { "Content-Type": "application/json" },
         }
       );
       if (res.status === 200) {
-        setAdmin({ ...admin, email: "", password: "", role: "" });
-        setOpen(false);
+        router.push("/auth/signIn/?user=admin");
+        setAdmin({ ...admin, email: "", password: "", name: "" });
+
         userDispatch({
           type: "ADD_USER",
           payload: admin,
         });
       }
     } catch (error) {
-      console.log(error);
+      if (error) {
+        if (error.response.status === 409) {
+          setExistMessage(error.response.data.message);
+        }
+      }
     }
   };
-  console.log(admin);
   const handleClose = () => {
     setOpen(false);
   };
-
   return (
     <div>
       <Modal
@@ -57,71 +63,88 @@ const AdminForm = ({ open, setOpen, setIsSubmit }) => {
         aria-describedby="modal-modal-description"
       >
         <Box sx={modalStyle(400)}>
-          <form onSubmit={handleSubmit}>
-            <Grid>
-              <Grid item xs={6}>
-                <Label htmlFor="email" required={true} label="Email" />
-                <TextField
-                  id="email"
-                  placeholder="Email"
-                  value={admin.email}
-                  onChange={(e) =>
-                    setAdmin({ ...admin, email: e.target.value })
-                  }
-                  sx={{
-                    marginBottom: "10px",
-                  }}
-                  fullWidth
-                  required
-                />
-              </Grid>
-              <Grid item xs={6}>
-                <Label htmlFor="password" required={true} label="Password" />
-                <TextField
-                  id="password"
-                  placeholder="password"
-                  value={admin.password}
-                  onChange={(e) =>
-                    setAdmin({ ...admin, password: e.target.value })
-                  }
-                  sx={{
-                    marginBottom: "10px",
-                  }}
-                  fullWidth
-                  required
-                  type="password"
-                />
-              </Grid>
-              <Grid item xs={6}>
-                <Label htmlFor="role" required={true} label="Select role" />
-                <Select
-                  sx={{
-                    marginBottom: "10px",
-                  }}
-                  onChange={(e) => setAdmin({ ...admin, role: e.target.value })}
-                  value={admin.role}
-                  displayEmpty
-                  fullWidth
-                  placeholder="Select Role"
-                >
-                  <MenuItem value="" disabled>
-                    <em>Select a role</em>
-                  </MenuItem>
-                  <MenuItem value="admin">Admin</MenuItem>
-                  <MenuItem value="modaretor">Modaretor</MenuItem>
-                </Select>
-              </Grid>
+          <Grid container spacing={4}>
+            <Grid
+              item
+              sx={{
+                margin: "auto",
+                backgroundColor: "white",
+                paddingRight: "32px",
+                paddingBottom: "32px",
+              }}
+            >
+              <Typography variant="h1" mt={10} mb={4}>
+                Admin Registation{" "}
+              </Typography>
+              <form onSubmit={handleSubmit}>
+                <Grid item>
+                  <Label htmlFor="name" required={true} label="name" />
+                  <TextField
+                    id="name"
+                    placeholder="name"
+                    value={admin.name}
+                    onChange={(e) =>
+                      setAdmin({ ...admin, name: e.target.value })
+                    }
+                    sx={{
+                      marginBottom: "10px",
+                    }}
+                    fullWidth
+                    required
+                  />
+                </Grid>
 
-              <Button
-                variant="contained"
-                color="primary"
-                fullWidth
-                type="submit"
-              >
-                Submit
-              </Button>
+                <Grid item>
+                  <Label htmlFor="email" required={true} label="Email" />
+                  <TextField
+                    id="email"
+                    placeholder="Email"
+                    value={admin.email}
+                    onChange={(e) =>
+                      setAdmin({ ...admin, email: e.target.value })
+                    }
+                    sx={{
+                      marginBottom: "10px",
+                    }}
+                    fullWidth
+                    required
+                  />
+                  {existMessage && (
+                    <Typography color="red">
+                      {existMessage}
+                      <br /> You can login by this email
+                    </Typography>
+                  )}
+                </Grid>
+                <Grid item>
+                  <Label htmlFor="password" required={true} label="Password" />
+                  <TextField
+                    id="password"
+                    placeholder="password"
+                    value={admin.password}
+                    onChange={(e) =>
+                      setAdmin({ ...admin, password: e.target.value })
+                    }
+                    sx={{
+                      marginBottom: "10px",
+                    }}
+                    fullWidth
+                    required
+                    type="password"
+                  />
+                </Grid>
+
+                <Button
+                  variant="contained"
+                  fullWidth
+                  color="primary"
+                  type="submit"
+                >
+                  Submit
+                </Button>
+              </form>
             </Grid>
-          </form>
+          </Grid>
         </Box>
       </Modal>
     </div>

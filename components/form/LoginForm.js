@@ -35,15 +35,18 @@ const LoginForm = ({ authProviders }) => {
       user: user,
       redirect: false,
     });
-    console.log(res);
-    // console.log(res);
+
     if (res.status === 200) {
-      router.replace(`/${user}`);
+      router.replace(`/${user}?user=${user}`);
       setUserInfo({ ...userInfo, email: "", password: "" });
     } else {
       setError("Try again incorrect email or password");
     }
   };
+  useEffect(() => {
+    setUserInfo({ email: "", password: "" });
+  }, [user]);
+
   return (
     <Grid container height={"80vh"}>
       {user ? (
@@ -139,10 +142,12 @@ const LoginForm = ({ authProviders }) => {
             )
           )}
 
-          <Typography>
-            Don't have an account?{" "}
-            <Link href={`/registation/${user}`}>Registation</Link>
-          </Typography>
+          {user !== "admin" && (
+            <Typography>
+              Don't have an account?{" "}
+              <Link href={`/registation/${user}`}>Registation</Link>
+            </Typography>
+          )}
         </Grid>
       ) : (
         <Grid

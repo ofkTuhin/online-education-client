@@ -22,8 +22,8 @@ const TeacherRegistation = () => {
     phone: "",
   });
   const router = useRouter();
-  console.log(teacher);
-  const { userDispatch, user } = useAppContext();
+
+  const { userDispatch, user, existMessage, setExistMessage } = useAppContext();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -42,7 +42,7 @@ const TeacherRegistation = () => {
           headers: { "Content-Type": "application/json" },
         }
       );
-      console.log(res);
+
       if (res.status === 200) {
         router.push("/auth/signIn/?user=teacher");
         setTeacher({
@@ -60,10 +60,14 @@ const TeacherRegistation = () => {
         });
       }
     } catch (error) {
-      console.log(error);
+      if (error) {
+        if (error.response.status === 409) {
+          setExistMessage(error.response.data.message);
+        }
+      }
     }
   };
-  console.log(teacher);
+
   return (
     <Grid container spacing={4}>
       <Grid
@@ -80,7 +84,7 @@ const TeacherRegistation = () => {
           Teacher Registation{" "}
         </Typography>
         <form onSubmit={handleSubmit}>
-          <Grid item xs={6}>
+          <Grid item>
             <Label htmlFor="name" required={true} label="name" />
             <TextField
               id="name"
@@ -95,12 +99,13 @@ const TeacherRegistation = () => {
               type="text"
             />
           </Grid>
-          <Grid item xs={6}>
+          <Grid item>
             <Label htmlFor="email" required={true} label="Email" />
             <TextField
               id="email"
               placeholder="Email"
               value={teacher.email}
+              type="email"
               onChange={(e) =>
                 setTeacher({ ...teacher, email: e.target.value })
               }
@@ -110,8 +115,14 @@ const TeacherRegistation = () => {
               fullWidth
               required
             />
+            {existMessage && (
+              <Typography color="red">
+                {existMessage}
+                <br /> You can login by this email
+              </Typography>
+            )}
           </Grid>
-          <Grid item xs={6}>
+          <Grid item>
             <Label htmlFor="password" required={true} label="Password" />
             <TextField
               id="password"
@@ -129,7 +140,7 @@ const TeacherRegistation = () => {
             />
           </Grid>
 
-          <Grid item xs={6}>
+          <Grid item>
             <Label htmlFor="phone" required={true} label="phone" />
             <TextField
               id="phone"
@@ -146,7 +157,7 @@ const TeacherRegistation = () => {
               type="text"
             />
           </Grid>
-          <Grid item xs={6}>
+          <Grid item>
             <Label htmlFor="subject" required={true} label="Select subject" />
             <Select
               sx={{

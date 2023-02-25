@@ -1,21 +1,19 @@
 import FullLayout from "@layouts/FullLayout";
+import { Button } from "@mui/material";
+import TutorialForm from "components/form/TutorialForm";
 import { getSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
+import { useAppContext } from "store/store";
 
 const Teacher = ({ session }) => {
-  const [items, setItems] = useState("");
-  const router = useRouter();
-  useEffect(() => {
-    const role = JSON.parse(localStorage.getItem("role"));
-    if (role !== "teacher") {
-      router.push("/404");
-    }
-  }, []);
+  const { teacherState } = useAppContext();
+  const [open, setOpen] = useState(false);
 
-  console.log(items);
   return (
     <FullLayout>
+      <Button onClick={() => setOpen(true)}>Add Class</Button>
+      <TutorialForm open={open} setOpen={setOpen} />
       <div>Teacher</div>
     </FullLayout>
   );
@@ -25,7 +23,14 @@ export default Teacher;
 export async function getServerSideProps(context) {
   const session = await getSession(context);
 
-  console.log(session);
+  if (session?.user?.user?.role !== "teacher") {
+    return {
+      redirect: {
+        destination: "/404",
+        permanent: false,
+      },
+    };
+  }
   if (!session) {
     return {
       redirect: {

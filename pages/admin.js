@@ -1,22 +1,20 @@
 import FullLayout from "@layouts/FullLayout";
-
-import { getSession } from "next-auth/react";
-import { useEffect } from "react";
-
+import { getSession, useSession } from "next-auth/react";
+import { useState } from "react";
 import { useRouter } from "next/router";
+import AdminForm from "components/form/AdminForm";
+import { Button } from "@mui/material";
 
 const admin = ({ session }) => {
-  const router = useRouter();
-  useEffect(() => {
-    const role = JSON.parse(localStorage.getItem("role"));
-    if (role !== "admin") {
-      router.push("/404");
-    }
-  }, []);
+  const [open, setOpen] = useState(false);
 
-  // get userState value from context
+  return (
+    <FullLayout>
+      <Button onClick={() => setOpen(true)}>Add Admin</Button>
 
-  return <FullLayout>admin</FullLayout>;
+      <AdminForm open={open} setOpen={setOpen} />
+    </FullLayout>
+  );
 };
 
 export default admin;
@@ -32,7 +30,14 @@ export async function getServerSideProps(context) {
       },
     };
   }
-
+  if (session.user.user.role !== "admin") {
+    return {
+      redirect: {
+        destination: "/404",
+        permanent: false,
+      },
+    };
+  }
   return {
     props: { session },
   };

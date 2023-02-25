@@ -23,8 +23,8 @@ const StudentRegistation = () => {
     group: "",
   });
   const router = useRouter();
-  console.log(student);
-  const { userDispatch } = useAppContext();
+
+  const { userDispatch, existMessage, setExistMessage } = useAppContext();
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -43,7 +43,7 @@ const StudentRegistation = () => {
           headers: { "Content-Type": "application/json" },
         }
       );
-      console.log(res);
+
       if (res.status === 200) {
         router.push("/auth/signIn/?user=student");
         setStudent({
@@ -62,10 +62,14 @@ const StudentRegistation = () => {
         });
       }
     } catch (error) {
-      console.log(error);
+      if (error) {
+        if (error.response.status === 409) {
+          setExistMessage(error.response.data.message);
+        }
+      }
     }
   };
-  console.log(student);
+
   return (
     <Grid container spacing={4}>
       <Grid
@@ -112,6 +116,12 @@ const StudentRegistation = () => {
               fullWidth
               required
             />
+            {existMessage && (
+              <Typography color="red">
+                {existMessage}
+                <br /> You can login by this email
+              </Typography>
+            )}
           </Grid>
           <Grid item>
             <Label htmlFor="password" required={true} label="Password" />
