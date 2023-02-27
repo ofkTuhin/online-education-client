@@ -61,10 +61,11 @@ const TeacherRegistation = () => {
       }
     } catch (error) {
       if (error) {
-        if (error.response.status === 409) {
+        if (error?.response?.status === 409) {
           setExistMessage(error.response.data.message);
         }
       }
+      console.log(error);
     }
   };
 

@@ -60,9 +60,9 @@ const LoginForm = ({ authProviders }) => {
             paddingBottom: "32px",
           }}
         >
-          <Typography variant="h1">Welcome to Admin Panel</Typography>
+          <Typography variant="h1">Login as {user}</Typography>
           <Typography variant="p">
-            Please enter your login credentials to access admin page
+            Please enter your login credentials to access {user} page
           </Typography>
           <Typography color="red" mt="10px" fontSize="12px">
             {error}

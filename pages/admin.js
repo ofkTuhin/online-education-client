@@ -30,13 +30,15 @@ export async function getServerSideProps(context) {
       },
     };
   }
-  if (session.user.user.role !== "admin") {
-    return {
-      redirect: {
-        destination: "/404",
-        permanent: false,
-      },
-    };
+  if (session) {
+    if (session.user.user.role !== "admin") {
+      return {
+        redirect: {
+          destination: "/404",
+          permanent: false,
+        },
+      };
+    }
   }
   return {
     props: { session },
