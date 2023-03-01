@@ -47,12 +47,9 @@ const SingleTutorial = ({ result }) => {
 export default SingleTutorial;
 
 export const getServerSideProps = async (context) => {
-  const tutorialId = context.query.tutorial;
-  // const res = await fetch(`${server}/api/product/${pid}`);
-  // const product = await res.json();
-  const res = await Axios(`class/${tutorialId}`);
+  const tutorialId = context.query?.tutorial;
+  const res = await Axios.get(`class/${tutorialId}`);
   const { result } = res.data;
-  console.log(res.data.result);
 
   const session = await getSession(context);
 

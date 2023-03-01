@@ -27,9 +27,7 @@ export const authOptions = {
         const { email, password, user } = credentials;
 
         const res = await data(user, email);
-
-        // const user = { id: 1, name: "J Smith", email: "jsmith@example.com" };
-
+        console.log(res);
         if (
           res.data.result.map((data) => data.email).includes(email) &&
           res.data.result.map((data) => data.password).includes(password)
@@ -38,6 +36,7 @@ export const authOptions = {
             user: {
               role: user,
               email: email,
+              result: res.data.result,
             },
           };
         }
