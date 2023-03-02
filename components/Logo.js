@@ -12,7 +12,7 @@ const Logo = () => {
       loading="eager"
       priority
     /> */}
-      Online Learning Platform
+      Remote Learning Mate
     </Link>
   );
 };
