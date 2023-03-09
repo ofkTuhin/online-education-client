@@ -7,6 +7,7 @@ import { useAppContext } from "store/store";
 import { makeStyles } from "@material-ui/core/styles";
 import MyCard from "components/cards/TutorialCard";
 import { Axios } from "@lib/axios";
+import TeacherCard from "components/cards/TeacherCard";
 
 const Teacher = ({ session }) => {
   const [open, setOpen] = useState(false);
@@ -34,18 +35,7 @@ const Teacher = ({ session }) => {
         Add Class
       </Button>
       <TutorialForm open={open} setOpen={setOpen} />
-      <Grid
-        ml={2}
-        sx={{
-          border: "1px solid #666",
-          padding: "10px 20px",
-          marginTop: "30px",
-        }}
-      >
-        <Typography>Nmae: {session?.user?.user?.result[0]?.name}</Typography>
-        <Typography>Email: {session?.user?.user?.result[0]?.email}</Typography>
-        <Typography>Phone: {session?.user?.user?.result[0]?.phone}</Typography>
-      </Grid>
+      <TeacherCard item={session?.user?.user?.result[0]} />
 
       <Grid my={4} ml={2}>
         <Typography variant="h3">

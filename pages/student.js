@@ -9,6 +9,9 @@ import { useAppContext } from "store/store";
 const Student = ({ session }) => {
   return (
     <FullLayout>
+      <Typography variant="h2" ml={2} my={2}>
+        Student Info
+      </Typography>
       <Grid
         ml={2}
         sx={{
@@ -17,9 +20,6 @@ const Student = ({ session }) => {
           marginTop: "30px",
         }}
       >
-        <Typography variant="h2" my={2}>
-          Student Info
-        </Typography>
         <Typography>Nmae: {session?.user?.user?.result[0]?.name}</Typography>
         <Typography>Email: {session?.user?.user?.result[0]?.email}</Typography>
         <Typography>Phone: {session?.user?.user?.result[0]?.phone}</Typography>

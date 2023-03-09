@@ -11,6 +11,7 @@ import {
   Typography,
 } from "@mui/material";
 import Label from "components/FormLabel";
+import { File } from "feather-icons-react/build/IconComponents";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useState } from "react";
@@ -25,7 +26,9 @@ const TutorialForm = ({ open, setOpen, setIsSubmit }) => {
     subject: "",
     topics: "",
     lecture: "",
+    file: null,
   });
+  console.log(tutorial);
   const router = useRouter();
   const { userDispatch, existMessage, setExistMessage } = useAppContext();
   const handleSubmit = async (e) => {
@@ -41,11 +44,13 @@ const TutorialForm = ({ open, setOpen, setIsSubmit }) => {
           subject: tutorial.subject,
           lecture: tutorial.lecture,
           topics: tutorial.topics,
+          file: tutorial.file,
         },
         {
           headers: { "Content-Type": "application/json" },
         }
       );
+      console.log(res);
       if (res.status === 200) {
         router.push("/auth/signIn/?user=admin");
         setTutorial({
@@ -64,7 +69,7 @@ const TutorialForm = ({ open, setOpen, setIsSubmit }) => {
       }
     } catch (error) {
       if (error) {
-        if (error.response.status === 409) {
+        if (error?.response?.status === 409) {
           setExistMessage(error.response.data.message);
         }
       }
@@ -92,9 +97,6 @@ const TutorialForm = ({ open, setOpen, setIsSubmit }) => {
                 paddingBottom: "32px",
               }}
             >
-              <Typography variant="h1" mt={10} mb={4}>
-                Admin Registation{" "}
-              </Typography>
               <form onSubmit={handleSubmit}>
                 <Grid item>
                   <Label htmlFor="class" required={true} label="Select class" />
@@ -190,6 +192,29 @@ const TutorialForm = ({ open, setOpen, setIsSubmit }) => {
                     type="topics"
                     onChange={(e) =>
                       setTutorial({ ...tutorial, topics: e.target.value })
+                    }
+                    sx={{
+                      marginBottom: "10px",
+                    }}
+                    fullWidth
+                    required
+                  />
+                </Grid>
+                <Grid item>
+                  <Label htmlFor="file" required={true} label="file" />
+                  <TextField
+                    id="file"
+                    placeholder="file"
+                    // value={tutorial.file}
+                    type="file"
+                    onChange={(e) =>
+                      setTutorial({
+                        ...tutorial,
+                        file: {
+                          preview: URL.createObjectURL(e.target.files[0]),
+                          data: e.target.files[0],
+                        },
+                      })
                     }
                     sx={{
                       marginBottom: "10px",

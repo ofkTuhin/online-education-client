@@ -4,7 +4,11 @@ import CredentialsProvider from "next-auth/providers/credentials";
 
 const data = async (user, email) => {
   return await Axios.get(
-    user === "admin" ? "admin" : user === "teacher" ? "teacher" : "student",
+    user === "admin"
+      ? "admin"
+      : user === "teacher"
+      ? "teacher/login"
+      : "student/login",
     {
       headers: {
         user: email,

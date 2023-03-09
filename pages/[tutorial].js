@@ -8,6 +8,7 @@ import { getSession } from "next-auth/react";
 
 const SingleTutorial = ({ result }) => {
   const { lecture } = result[0];
+  console.log(result[0]);
   return (
     <FullLayout>
       <Grid
