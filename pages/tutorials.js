@@ -4,8 +4,16 @@ import { Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { useAppContext } from "store/store";
 import MyCard from "components/cards/TutorialCard";
+import { Axios } from "@lib/axios";
 
 const Tutorials = () => {
+  const deleteClass = (classId) => {
+    console.log("class");
+    const res = Axios.delete(`class/delete-class/${classId}`);
+    if (res.status === 200) {
+      console.log("delete successfully");
+    }
+  };
   const {
     tutorialState: { tutorials },
   } = useAppContext();
@@ -29,6 +37,7 @@ const Tutorials = () => {
                 classes={tutorial.class}
                 teacher={tutorial.teacher}
                 id={tutorial._id}
+                deleteClass={deleteClass}
               />
             </Grid>
           ))}
