@@ -43,12 +43,22 @@ const Menuitems = [
     teacher: true,
     student: true,
   },
+
   {
     title: "All Tutoreals",
     icon: "video",
     href: "/all-tutorials",
     value: "all-tutorials",
     admin: true,
+  },
+  {
+    title: "documents",
+    icon: "book",
+    href: "/documents",
+    value: "documents",
+    admin: true,
+    teacher: true,
+    student: true,
   },
 ];
 

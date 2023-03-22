@@ -1,6 +1,6 @@
 import FullLayout from "@layouts/FullLayout";
 import { Button, Grid, Typography } from "@mui/material";
-import TutorialForm from "components/form/TutorialForm";
+import TutorialForm from "components/form/UploadFile";
 import { getSession } from "next-auth/react";
 import React, { useEffect, useState } from "react";
 import { useAppContext } from "store/store";
@@ -8,9 +8,11 @@ import { makeStyles } from "@material-ui/core/styles";
 import MyCard from "components/cards/TutorialCard";
 import { Axios } from "@lib/axios";
 import TeacherCard from "components/cards/TeacherCard";
+import UploadFile from "components/form/UploadFile";
 
 const Teacher = ({ session }) => {
   const [open, setOpen] = useState(false);
+  const [fileOpen, setFileOpen] = useState(false);
   const {
     tutorialState: { tutorials },
   } = useAppContext();
@@ -34,7 +36,19 @@ const Teacher = ({ session }) => {
       >
         Add Class
       </Button>
+      <Button
+        variant="contained"
+        color={"primary"}
+        onClick={() => setFileOpen(true)}
+        sx={{
+          marginLeft: "10px",
+        }}
+      >
+        Upload Pdf
+      </Button>
       <TutorialForm open={open} setOpen={setOpen} />
+      <UploadFile open={fileOpen} setOpen={setFileOpen} />
+
       <TeacherCard item={session?.user?.user?.result[0]} />
 
       <Grid my={4} ml={2}>
