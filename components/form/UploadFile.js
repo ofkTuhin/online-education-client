@@ -31,7 +31,9 @@ const UploadFile = ({ open, setOpen, setIsSubmit }) => {
         body: formData,
       }
     );
-
+    if (response.status === 200) {
+      setOpen(false);
+    }
     const responseWithBody = await response.json();
     if (response) setUrl(responseWithBody.publicUrl);
   };
