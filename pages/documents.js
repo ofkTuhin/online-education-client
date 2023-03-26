@@ -17,7 +17,7 @@ const Documents = ({ files }) => {
             sx={{
               textDecoration: "none",
             }}
-            href={`/https://drive.google.com/file/d/${item.file}`}
+            href={`https://drive.google.com/file/d/${item.file}`}
           >
             <Grid
               sx={{
