@@ -70,10 +70,10 @@ const Menuitems = [
     student: true,
   },
   {
-    title: "skill",
+    title: "Skills",
     icon: "book",
-    href: "/skill",
-    value: "skill",
+    href: "/skills",
+    value: "skills",
     admin: true,
     teacher: true,
     student: true,
