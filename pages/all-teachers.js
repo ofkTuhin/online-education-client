@@ -9,7 +9,7 @@ const AllTeachers = () => {
   const {
     teacherState: { teachers },
   } = useAppContext();
-  console.log(teachers);
+
   return (
     <FullLayout>
       <Grid>
