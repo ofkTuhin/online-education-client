@@ -60,6 +60,24 @@ const Menuitems = [
     teacher: true,
     student: true,
   },
+  {
+    title: "Asssignment",
+    icon: "book",
+    href: "/assignment",
+    value: "assignment",
+    admin: true,
+    teacher: true,
+    student: true,
+  },
+  {
+    title: "skill",
+    icon: "book",
+    href: "/skill",
+    value: "skill",
+    admin: true,
+    teacher: true,
+    student: true,
+  },
 ];
 
 export default Menuitems;
