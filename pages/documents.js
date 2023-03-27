@@ -43,7 +43,7 @@ export default Documents;
 
 export const getServerSideProps = async () => {
   const res = await Axios.get("class/file/pdf");
-  console.log(res);
+
   return {
     props: {
       files: res.data.files,
